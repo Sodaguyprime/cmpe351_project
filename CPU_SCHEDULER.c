@@ -4,21 +4,29 @@
 void takedata(const char *filename);
 
 int main() {
-    // Call the user-defined function with the filename
     takedata("text.txt");
 
-    return 0; // Return success
+    return 0;
 }
 
 void takedata(const char *Filename) {
 
-    FILE *file = fopen(Filename, "r");
+    FILE *fh = fopen(Filename, "r");
 
-    char line[1024];
-    while (fgets(line, sizeof(line), file) != NULL) {
-        printf("%s", line);
+    if (fh !=NULL)
+{
+    char c;
+    while ((c= fgetc(fh)) != EOF) 
+    {
+     putchar(c);
     }
+    fclose(fh);
 
-    fclose(file);
+}else printf("Error opening file.\n");
+
+  FILE *fp;
+  fp = fopen("output.txt", "w");
+
+  fclose(fp);
+  
 }
-
