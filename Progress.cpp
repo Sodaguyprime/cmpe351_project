@@ -4,7 +4,7 @@
 using namespace std;
 
 int countlines(const string& filename);
-
+void FCFS (const string& filename);
 int main() {
     int choice;
     int schedule;
@@ -14,7 +14,6 @@ int main() {
     string mystring2;
     myString = "NONE";
     mystring2 = "OFF";
-    cout << "Your input is: " << myString << endl;
     while (true) {
         cout << "                     CPU SCHEDULER SIMULATOR\n";
         cout << "  1) Scheduling Method("<<myString<<")\n";
@@ -40,16 +39,16 @@ int main() {
                 cin >>schedule;
                 switch(schedule){
                     case 1:
-                        myString = "First come first served";
+                        myString = " First-come-first-served ";
                         break;
                     case 2:
-                        myString = "Shortest Job first";
+                        myString = " Shortest-Job-first ";
                         break;
                     case 3:
-                        myString =" priority scheduling";
+                        myString =" Priority-Scheduling ";
                         break;
                     case 4:
-                        myString="Round-Robin ";
+                        myString=" Round-Robin ";
                         break;
                 }
                 break;
@@ -61,28 +60,48 @@ int main() {
                 cin >>schedule2;
                 switch(schedule2){
                     case 1:
-                        mystring2 = "ON";
+                        mystring2 = " ON ";
                         break;
                     case 2:
-                        mystring2 = "OFF";
+                        mystring2 = " OFF ";
                         break;
                 }
                 break;
             case 3:
-                cout << "Show Result\n";
+                cout << "                   Show Result\n";
+                FCFS("text.txt");
+                cout<<"\n";
                 break;
             default:
                 cout << "Invalid choice\n";
-                continue; // Skip the rest of the loop and start a new iteration
+                continue;
         }
 
         lines = countlines("text.txt");
 
-        // Uncomment the next line if you want to use the takedata function
     }
 
     return 0;
 }
+
+
+void FCFS(const string& filename){
+
+    ifstream file(filename);
+    char char1;
+    int intitself;
+    while (file.get(char1)) {
+        if (char1 != ':' && char1 != '\n') {
+            intitself = char1 - '0';
+            cout << "Character from file: " << intitself <<endl;
+            }
+
+    }
+    file.close();
+    
+}
+
+
 
 int countlines(const string& filename) {
     int count = 0;

@@ -1,0 +1,14 @@
+1- the countline function can use this:
+while(getline(file,line))
+{
+    ++numline;
+}
+
+
+2-  if (!inputFile.is_open()) {
+        cerr << "Error opening the file!" << endl;
+        return 1;
+    }
+make sure to add an error message when opening files..
+
+3- make sure to add close file functions in the end.
