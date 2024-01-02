@@ -4,18 +4,20 @@
 using namespace std;
 
 int countlines(const string& filename);
-void FCFS (const string& filename);
+void setdAta (const string& filename, int lines);
+void FCFS(int dAtarray[][3], int BT[], int At[], int Priority[], int lines);
 int main() {
     int choice;
     int schedule;
     int schedule2;
     int lines;
+    lines = countlines("text.txt");
     string myString;
     string mystring2;
     myString = "NONE";
     mystring2 = "OFF";
     while (true) {
-        cout << "                     CPU SCHEDULER SIMULATOR\n";
+        cout << "                     CPU SCHEDULER SIMULAtOR\n";
         cout << "  1) Scheduling Method("<<myString<<")\n";
         cout << "  2) Preemptive Mode ("<<mystring2<<")\n";
         cout << "  3) Show Result\n";
@@ -69,7 +71,7 @@ int main() {
                 break;
             case 3:
                 cout << "                   Show Result\n";
-                FCFS("text.txt");
+                setdAta("text.txt",lines);
                 cout<<"\n";
                 break;
             default:
@@ -77,28 +79,59 @@ int main() {
                 continue;
         }
 
-        lines = countlines("text.txt");
-
     }
 
     return 0;
 }
 
+void FCFS(int dAtarray[][3], int BT[], int At[], int Priority[], int lines) {
+    for (int k = 0; k < lines; k++) {
+        BT[k] = dAtarray[k][0];
+        At[k] = dAtarray[k][1];
+        Priority[k] = dAtarray[k][2];
+    }
 
-void FCFS(const string& filename){
+     for (int k = 0; k < lines; k++) {
+        cout << "Array 1: " << BT[k] << " | ";
+        cout << "Array 2: " << At[k] << " | ";
+        cout << "Array 3: " << Priority[k] <<endl;
+    }
+}
 
+void setdAta(const string& filename,int lines){
+    int dAtarray[lines][3];
+    int i = 0;
+    int temparray[lines * 3];
     ifstream file(filename);
     char char1;
     int intitself;
     while (file.get(char1)) {
         if (char1 != ':' && char1 != '\n') {
             intitself = char1 - '0';
-            cout << "Character from file: " << intitself <<endl;
+            temparray[i] = intitself;
+            i++;
             }
-
     }
     file.close();
+    int index = 0;
+    for (int k=0;k<lines;k++){
+        for(int j=0; j<3;j++){
+            dAtarray[k][j] = temparray[index];
+            index++;
+        }
+    }
+    /*for ( int test1 = 0; test1 <lines; test1++){
+        for(int test2 =0; test2<3; test2++){
+        cout<<dAtarray[test1][test2]; 
+        }
+    cout<<endl;
+    } */
     
+    int BT[lines];
+    int At[lines];
+    int Priority[lines];
+
+    FCFS(dAtarray, BT, At, Priority, lines);
 }
 
 
@@ -121,5 +154,5 @@ int countlines(const string& filename) {
     } while (file.good());
 
     file.close();
-    return count;
+    return count+1;
 }

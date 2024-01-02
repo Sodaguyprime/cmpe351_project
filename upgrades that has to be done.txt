@@ -12,3 +12,6 @@ while(getline(file,line))
 make sure to add an error message when opening files..
 
 3- make sure to add close file functions in the end.
+
+
+4- error handling when navigating the menu.
