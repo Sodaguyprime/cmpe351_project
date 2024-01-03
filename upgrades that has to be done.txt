@@ -15,3 +15,9 @@ make sure to add an error message when opening files..
 
 
 4- error handling when navigating the menu.
+
+5-must add comments
+
+6-ensure the right functions is called for the right calls andoptions chosen
+
+7- swapping arrays have to swap the proccess id as well
