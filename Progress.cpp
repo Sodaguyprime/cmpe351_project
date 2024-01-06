@@ -74,7 +74,13 @@ int main() {
                 break;
             case 3:
                 cout << "                   Show Result\n";
+            if (myString ==  " First-come-first-served " ){
+                FCFS(BT, At, Priority, lines);
+            }else if(myString == " Shortest-Job-first "){
+                SJF(BT, At, Priority, lines);
+            }else if(myString == " Priority-Scheduling "){
             Priority_scheduling(BT, At, Priority, lines);
+            }else{cout<<"not ready or incorrect output";}
                 cout<<"\n";
                 break;
             default:
@@ -90,7 +96,7 @@ int main() {
 void FCFS(int BT[], int At[], int Priority[],int lines) {
     setdAta("text.txt",lines,BT,At,Priority);
     int process_id[lines];
-    int averagewait = 0;
+    float averagewait = 0;
     int waiting_time[lines];
     int waitingint = 0;
 
@@ -128,7 +134,7 @@ void FCFS(int BT[], int At[], int Priority[],int lines) {
 void SJF(int BT[], int At[], int Priority[],int lines) {
     setdAta("text.txt",lines,BT,At,Priority);
     int process_id[lines];
-    int averagewait = 0;
+    float averagewait = 0;
     int waiting_time[lines];
     int waitingint = 0;
     for (int counting = 0; counting<lines; counting++){
@@ -164,7 +170,7 @@ void SJF(int BT[], int At[], int Priority[],int lines) {
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines) {
     setdAta("text.txt",lines,BT,At,Priority);
     int process_id[lines];
-    int averagewait = 0;
+    float averagewait = 0;
     int waiting_time[lines];
     int waitingint = 0;
     for (int counting = 0; counting<lines; counting++){
