@@ -74,7 +74,7 @@ int main() {
                 break;
             case 3:
                 cout << "                   Show Result\n";
-            FCFS(BT, At, Priority, lines);
+            Priority_scheduling(BT, At, Priority, lines);
                 cout<<"\n";
                 break;
             default:
@@ -155,7 +155,7 @@ void SJF(int BT[], int At[], int Priority[],int lines) {
         waiting_time[t] = waitingint;
         cout<<"proccess waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
         waitingint = waitingint + BT[t];
-        averagewait = averagewait + waitingint;
+        averagewait = averagewait + waiting_time[t];
     }
 
     cout<<"Scheduling method: SHORTEST JOB FIRST"<<endl<<" Average process waiting times are: "<< averagewait/lines <<endl;
@@ -189,7 +189,7 @@ void Priority_scheduling(int BT[], int At[], int Priority[],int lines) {
         waiting_time[t] = waitingint;
         cout<<"proccess waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
         waitingint = waitingint + BT[t];
-        averagewait = averagewait + waitingint;
+        averagewait = averagewait + waiting_time[t];
     }
     cout<<"Scheduling method: Priority Scheduling"<<endl<<" Average process waiting times are: "<< averagewait/lines <<endl;
 }
