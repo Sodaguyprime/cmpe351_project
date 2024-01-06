@@ -21,3 +21,7 @@ make sure to add an error message when opening files..
 6-ensure the right functions is called for the right calls andoptions chosen
 
 7- swapping arrays have to swap the proccess id as well
+
+8- list the proceess accoedingly
+
+9-fix SJF and fix Priority 

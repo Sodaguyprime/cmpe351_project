@@ -74,7 +74,7 @@ int main() {
                 break;
             case 3:
                 cout << "                   Show Result\n";
-            SJF(BT, At, Priority, lines);
+            FCFS(BT, At, Priority, lines);
                 cout<<"\n";
                 break;
             default:
@@ -93,11 +93,12 @@ void FCFS(int BT[], int At[], int Priority[],int lines) {
     int averagewait = 0;
     int waiting_time[lines];
     int waitingint = 0;
+
     for (int counting = 0; counting<lines; counting++){
         process_id[counting] = (counting + 1);
     }
 
-   for (int i = 0; i < lines - 1; i++) {
+     for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
             // Compare based on Arrival Time (AT)
             if (At[j] > At[j + 1]) {
@@ -108,16 +109,16 @@ void FCFS(int BT[], int At[], int Priority[],int lines) {
                 swap(process_id[j], process_id[j + 1]);
             }
         }
-    }
-
+    } 
+    
 
 
     cout<<" the amount of Proccess we have are: "<<lines<<endl;
        for (int t=0; t<lines; t++){
-        waiting_time[t] = waitingint;
+        waiting_time[t] = waitingint ;
         cout<<"proccess waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
-        waitingint = waitingint + BT[t+1];
-        averagewait = averagewait + waitingint;
+        waitingint = waitingint + BT[t];
+        averagewait = averagewait + waiting_time[t];
     }
 
     cout<<"Scheduling method: First come First served"<<endl<<" average process waiting times are: "<< averagewait/lines <<endl;
