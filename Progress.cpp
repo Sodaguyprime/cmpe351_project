@@ -3,12 +3,18 @@
 #include <string>
 using namespace std;
 
+//declaring functions
+
 int countlines(const string& filename);
-void setdAta(const string& filename,int lines,int BT[],int At[],int Priority[]);
+void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]);
 void FCFS(int BT[], int At[], int Priority[], int lines);
 void SJF(int BT[], int At[], int Priority[],int lines);
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines);
+void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines);
+
+//main function:
 int main() {
+    //declaring variables
     int choice;
     int schedule;
     int schedule2;
@@ -19,6 +25,7 @@ int main() {
     string mystring2;
     myString = "NONE";
     mystring2 = "OFF";
+    //main menu function
     while (true) {
         cout << "                     CPU SCHEDULER SIMULAtOR\n";
         cout << "  1) Scheduling Method("<<myString<<")\n";
@@ -92,9 +99,12 @@ int main() {
 
     return 0;
 }
+//code for FCFS scheduling
 
 void FCFS(int BT[], int At[], int Priority[],int lines) {
-    setdAta("text.txt",lines,BT,At,Priority);
+    //calling function to give us the array
+    setdata("text.txt",lines,BT,At,Priority);
+    //declaring varibales needed
     int process_id[lines];
     float averagewait = 0;
     int waiting_time[lines];
@@ -106,9 +116,9 @@ void FCFS(int BT[], int At[], int Priority[],int lines) {
 
      for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
-            // Compare based on Arrival Time (AT)
-            if (At[j] > At[j + 1]) {
-                // Swap values in all arrays
+            // Compare based on Arrival Time (At)
+            if (At[j] > At[j + 1])
+             {
                 swap(At[j], At[j + 1]);
                 swap(BT[j], BT[j + 1]);
                 swap(Priority[j], Priority[j + 1]);
@@ -116,23 +126,22 @@ void FCFS(int BT[], int At[], int Priority[],int lines) {
             }
         }
     } 
-    
-
-
-    cout<<" the amount of Proccess we have are: "<<lines<<endl;
+    cout<<" The amount of Proccess we have are: "<<lines<<endl;
        for (int t=0; t<lines; t++){
         waiting_time[t] = waitingint ;
-        cout<<"proccess waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
+        cout<<"waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
         waitingint = waitingint + BT[t];
         averagewait = averagewait + waiting_time[t];
     }
 
-    cout<<"Scheduling method: First come First served"<<endl<<" average process waiting times are: "<< averagewait/lines <<endl;
+    cout<<"                         Scheduling method: First come First served"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
 }
-
+//code for SJF scheduling
 
 void SJF(int BT[], int At[], int Priority[],int lines) {
-    setdAta("text.txt",lines,BT,At,Priority);
+    //calling function to give us the array
+    setdata("text.txt",lines,BT,At,Priority);
+    //declaring variables needed
     int process_id[lines];
     float averagewait = 0;
     int waiting_time[lines];
@@ -143,9 +152,9 @@ void SJF(int BT[], int At[], int Priority[],int lines) {
 
    for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
-            // Compare based on Arrival Time (AT)
-            if (BT[j] > BT[j + 1]) {
-                // Swap values in all arrays
+            // Compare based on Burst Time (Bt)
+            if (BT[j] > BT[j + 1]) 
+            {
                 swap(At[j], At[j + 1]);
                 swap(BT[j], BT[j + 1]);
                 swap(Priority[j], Priority[j + 1]);
@@ -153,35 +162,37 @@ void SJF(int BT[], int At[], int Priority[],int lines) {
             }
         }
     }
-
-
-
     cout<<" the amount of Proccess we have are: "<<lines<<endl;
        for (int t=0; t<lines; t++){
         waiting_time[t] = waitingint;
-        cout<<"proccess waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
+        cout<<"waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
         waitingint = waitingint + BT[t];
         averagewait = averagewait + waiting_time[t];
     }
 
-    cout<<"Scheduling method: SHORTEST JOB FIRST"<<endl<<" Average process waiting times are: "<< averagewait/lines <<endl;
+    cout<<"                         Scheduling method: SHORTEST JOB FIRST"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
 }
+//code for Priority scheduling
 
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines) {
-    setdAta("text.txt",lines,BT,At,Priority);
+    //calling function to give us the array
+    setdata("text.txt",lines,BT,At,Priority);
+    //declaring variables needed
+
     int process_id[lines];
     float averagewait = 0;
     int waiting_time[lines];
     int waitingint = 0;
+
     for (int counting = 0; counting<lines; counting++){
         process_id[counting] = (counting + 1);
     }
 
    for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
-            // Compare based on Arrival Time (AT)
-            if (Priority[j] > Priority[j + 1]) {
-                // Swap values in all arrays
+            // Compare based on priority (priority)
+            if (Priority[j] > Priority[j + 1]) 
+            {
                 swap(At[j], At[j + 1]);
                 swap(BT[j], BT[j + 1]);
                 swap(Priority[j], Priority[j + 1]);
@@ -193,15 +204,22 @@ void Priority_scheduling(int BT[], int At[], int Priority[],int lines) {
     cout<<" the amount of Proccess we have are: "<<lines<<endl;
        for (int t=0; t<lines; t++){
         waiting_time[t] = waitingint;
-        cout<<"proccess waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
+        cout<<"waiting time for P"<<process_id[t]<<" is: "<<waiting_time[t]<<endl;
         waitingint = waitingint + BT[t];
         averagewait = averagewait + waiting_time[t];
     }
-    cout<<"Scheduling method: Priority Scheduling"<<endl<<" Average process waiting times are: "<< averagewait/lines <<endl;
+    cout<<"                         Scheduling method: Priority Scheduling"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
+}
+//code for Round-Robin scheduling
+
+void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines){
+
+
 }
 
+//code for setting data into arrays
 
-void setdAta(const string& filename,int lines,int BT[],int At[],int Priority[]){
+void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
     int dAtarray[lines][3];
     int i = 0;
     int temparray[lines * 3];
@@ -230,9 +248,7 @@ void setdAta(const string& filename,int lines,int BT[],int At[],int Priority[]){
         Priority[k] = dAtarray[k][2];
     }
 }
-
-
-
+//code for counting how many processes we have in the file
 int countlines(const string& filename) {
     int count = 0;
     char D;

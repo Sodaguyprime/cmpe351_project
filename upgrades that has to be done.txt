@@ -34,3 +34,4 @@ make sure to add an error message when opening files..
 
 14-error handling with premetive mode and uncompatible scheduling methods 
 15- create output files
+16- tabs and empty spaces to be replaced by /t
