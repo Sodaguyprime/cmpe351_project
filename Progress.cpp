@@ -7,11 +7,12 @@ using namespace std;
 
 int countlines(const string& filename);
 void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]);
-void FCFS(int BT[], int At[], int Priority[], int lines);
-void SJF(int BT[], int At[], int Priority[],int lines);
-void Priority_scheduling(int BT[], int At[], int Priority[],int lines);
-void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines);
-
+void FCFS(int BT[], int At[], int Priority[], int lines,string myString, string mystring2);
+void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
+void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
+void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2);
+int isarrayempty(int remainBurstTime[], int lines);
+void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[], int averagewait);
 //main function:
 int main() {
     //declaring variables
@@ -24,7 +25,7 @@ int main() {
     string myString;
     string mystring2;
     myString = "NONE";
-    mystring2 = "OFF";
+    mystring2 = " OFF ";
     //main menu function
     while (true) {
         cout << "                     CPU SCHEDULER SIMULAtOR\n";
@@ -82,19 +83,19 @@ int main() {
             case 3:
                 cout << "                   Show Result\n";
             if (myString ==  " First-come-first-served " ){
-                FCFS(BT, At, Priority, lines);
+                FCFS(BT, At, Priority, lines,myString, mystring2);
             }else if(myString == " Shortest-Job-first "){
-                SJF(BT, At, Priority, lines);
+                SJF(BT, At, Priority, lines,myString,mystring2);
             }else if(myString == " Priority-Scheduling "){
-            Priority_scheduling(BT, At, Priority, lines);}
+            Priority_scheduling(BT, At, Priority,lines,myString,mystring2);}
             else if(myString == " Shortest-Job-first " && mystring2 ==" ON "){
                 cout<<"preemptive mode for SJF is not ready yet ";
             }else if(myString == " Priority-Scheduling " && mystring2 ==" ON "){
                 cout<<"preemptive mode for priority is not ready yet ";
             }else if(myString == " Round-Robin " && mystring2 ==" ON "){
-                cout<<"preemptive mode for Round-Robin is not ready yet ";
+                cout<<"preemptive mode for Round-Robin does not exist ";
             }else if(myString == " Round-Robin " && mystring2 ==" OFF "){
-                cout<<"Round-robin is not ready yet ";
+                Round_Robin_scheduling(BT,At,Priority,lines,myString,mystring2);
             }
             else{cout<<"not ready or incorrect output";}
                 cout<<"\n";
@@ -110,7 +111,7 @@ int main() {
 }
 //code for FCFS scheduling
 
-void FCFS(int BT[], int At[], int Priority[],int lines) {
+void FCFS(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
     //calling function to give us the array
     setdata("text.txt",lines,BT,At,Priority);
     //declaring varibales needed
@@ -157,11 +158,13 @@ for (int i = 0; i < lines - 1; i++) {
     }
 
     cout<<"                         Scheduling method: First come First served"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
+writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+
 }
 
 //code for SJF scheduling
 
-void SJF(int BT[], int At[], int Priority[],int lines) {
+void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
     //calling function to give us the array
 
     setdata("text.txt",lines,BT,At,Priority);
@@ -217,7 +220,7 @@ void SJF(int BT[], int At[], int Priority[],int lines) {
 }
 //code for Priority scheduling
 
-void Priority_scheduling(int BT[], int At[], int Priority[],int lines) {
+void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
     //calling function to give us the array
     setdata("text.txt",lines,BT,At,Priority);
     //declaring variables needed
@@ -271,9 +274,32 @@ for (int i = 0; i < lines - 1; i++) {
 }
 //code for Round-Robin scheduling
 
-void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines){
+void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2){
 
+setdata("text.txt",lines,BT,At,Priority);
+int time_quantum;
+int countertime;
+cout<<"please enter your time Quantum: ";
+cin>>time_quantum;
+cout<<endl;
 
+int remainBurstTime[lines];
+for (int i= 0; i < lines; i++){
+    if(BT[i] > time_quantum){
+        countertime = countertime + time_quantum;
+        remainBurstTime[i] = BT[i] - time_quantum;
+    }
+    else{
+        countertime + remainBurstTime;
+        remainBurstTime[i] = 0;
+    }
+}
+cout<<"counter time after first run is: "<<countertime;
+
+/*if(isarrayempty(remainBurstTime,lines) == -1){
+cout<<"\n empty ";
+}else{cout<<"\n not empty";}
+*/
 }
 
 //code for setting data into arrays
@@ -327,4 +353,34 @@ int countlines(const string& filename) {
 
     file.close();
     return count+1;
+}
+
+int isarrayempty(int remainBurstTime[], int lines){
+int wecount = 0;
+int counter = 0;
+    while(counter != lines){
+        if( remainBurstTime[wecount] == 0 ){
+            counter++;
+        }
+     wecount++;
+    }
+
+    if(counter < lines){
+        return -1;
+    }else{ return 0;}
+}
+void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[],int averagewait){
+    ofstream outputtext("output.txt");
+    if(!outputtext.is_open()){
+        cout<<"unable to save to output file"<<endl;
+    }else{
+        outputtext << "Scheduling method: "<<myString<<endl;
+        outputtext << "Preemptive mode: "<<mystring2<<endl;
+        outputtext<<"process waiting times: "<<endl;
+        for (int i = 0; i<lines; i++){
+            outputtext<<"Process P"<<process_id[i]<<" waiting time is:  "<<waiting_time[i]<<endl;
+        }
+        outputtext<<"\n Average waiting time is: "<< averagewait/lines<<endl<<"----------------------------------------------------------------------------"<<endl;
+    }        
+    outputtext.close();
 }
