@@ -285,6 +285,8 @@ int time_quantum;
 int countertime = 0;
 int remainBurstTime[lines];
 int waiting_time[lines] = {0};
+int completion_time[lines] = {0};
+int TAT_time[lines];
 
 //getting our time Quantum
 
@@ -301,23 +303,28 @@ cout<<endl;
 // isarrayempty =  -1 means not empty
 // 0 means empty
 while(isarrayempty(remainBurstTime,lines) == -1){
-for (int i= 0; i < lines; i++){
+for (int i= 0; i < lines; i++)
+ {
     if(remainBurstTime[i] > 0){
         if(remainBurstTime[i] > time_quantum){
-        countertime = countertime + time_quantum;
+        countertime += time_quantum;
         remainBurstTime[i] = remainBurstTime[i] - time_quantum;
-
     }else{
         countertime += remainBurstTime[i];
         remainBurstTime[i] = 0;
         }
+    completion_time[i] = countertime;
+    TAT_time[i] = (completion_time[i] - At[i]);
+    waiting_time[i] =TAT_time[i] - BT[i];
     }
  }
+ 
 }
-
-for (int i = 0; i < lines; i++) {
- cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
+// cout<<"\n totall counter time is: "<<countertime<<endl;
+for (int i = 0; i < lines; i++) 
+{cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
 cout<<endl;
+
 }
 
 //code for setting data into arrays
