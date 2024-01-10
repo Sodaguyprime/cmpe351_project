@@ -12,7 +12,7 @@ void SJF(int BT[], int At[], int Priority[],int lines,string myString, string my
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
 void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2);
 int isarrayempty(int remainBurstTime[], int lines);
-void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[], int averagewait);
+void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[], float averagewait);
 //main function:
 int main() {
     //declaring variables
@@ -217,6 +217,7 @@ void SJF(int BT[], int At[], int Priority[],int lines,string myString, string my
 
 
     cout<<"                         Scheduling method: SHORTEST JOB FIRST"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
+writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 }
 //code for Priority scheduling
 
@@ -233,7 +234,6 @@ void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myS
     for (int counting = 0; counting<lines; counting++){
         process_id[counting] = (counting + 1);
     }
-
    for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
             // Compare based on priority (priority)
@@ -246,15 +246,12 @@ void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myS
             }
         }
     }
-
     cout<<" the amount of Proccess we have are: "<<lines<<endl;
        for (int t=0; t<lines; t++){
         waiting_time[t] = waitingint;
         waitingint = waitingint + BT[t];
         averagewait = averagewait + waiting_time[t];
     }
-
-
 for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
             // Compare based on Burst Time (Bt)
@@ -271,6 +268,7 @@ for (int i = 0; i < lines - 1; i++) {
 
 
     cout<<"                         Scheduling method: Priority Scheduling"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
+writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 }
 //code for Round-Robin scheduling
 
@@ -287,7 +285,12 @@ int remainBurstTime[lines];
 int waiting_time[lines] = {0};
 int completion_time[lines] = {0};
 int TAT_time[lines];
+float averagewait = 0;
+int process_id[lines];
 
+ for (int counting = 0; counting<lines; counting++){
+    process_id[counting] = (counting + 1);
+    }
 //getting our time Quantum
 
 cout<<"please enter your time Quantum: ";
@@ -316,14 +319,16 @@ for (int i= 0; i < lines; i++)
     completion_time[i] = countertime;
     TAT_time[i] = (completion_time[i] - At[i]);
     waiting_time[i] =TAT_time[i] - BT[i];
+    averagewait += waiting_time[i];
     }
  }
- 
 }
 // cout<<"\n totall counter time is: "<<countertime<<endl;
 for (int i = 0; i < lines; i++) 
 {cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
-cout<<endl;
+cout<<endl<<"Average waiting Time is: "<<averagewait/lines<<endl;
+
+writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 
 }
 
@@ -357,6 +362,7 @@ void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
         At[k] = dataArray[k][1];
         Priority[k] = dataArray[k][2];
     }
+    
 }
 //code for counting how many processes we have in the file
 int countlines(const string& filename) {
@@ -389,8 +395,7 @@ int isarrayempty(int remainBurstTime[], int lines){
     return 0; // Empty
 }
 
-
-void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[],int averagewait){
+void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[],float averagewait){
     ofstream outputtext("output.txt",ios::app);
     if(!outputtext.is_open()){
         cout<<"unable to save to output file"<<endl;
