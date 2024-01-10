@@ -278,19 +278,22 @@ void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string m
 
 setdata("text.txt",lines,BT,At,Priority);
 int time_quantum;
-int countertime;
+int countertime = 0;
+int remainBurstTime[lines];
 cout<<"please enter your time Quantum: ";
 cin>>time_quantum;
 cout<<endl;
 
-int remainBurstTime[lines];
+ for (int i = 0; i < lines; i++) {
+        remainBurstTime[i] = BT[i];
+    }
 for (int i= 0; i < lines; i++){
     if(BT[i] > time_quantum){
         countertime = countertime + time_quantum;
         remainBurstTime[i] = BT[i] - time_quantum;
     }
     else{
-        countertime + remainBurstTime;
+        countertime + BT[i];
         remainBurstTime[i] = 0;
     }
 }
@@ -369,8 +372,9 @@ int counter = 0;
         return -1;
     }else{ return 0;}
 }
+
 void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[],int averagewait){
-    ofstream outputtext("output.txt");
+    ofstream outputtext("output.txt",ios::app);
     if(!outputtext.is_open()){
         cout<<"unable to save to output file"<<endl;
     }else{
