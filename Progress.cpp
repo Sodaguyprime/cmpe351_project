@@ -276,33 +276,48 @@ for (int i = 0; i < lines - 1; i++) {
 
 void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2){
 
+//setting data into our array:
 setdata("text.txt",lines,BT,At,Priority);
+
+//initializing what we need
+
 int time_quantum;
 int countertime = 0;
 int remainBurstTime[lines];
+int waiting_time[lines] = {0};
+
+//getting our time Quantum
+
 cout<<"please enter your time Quantum: ";
 cin>>time_quantum;
 cout<<endl;
 
+//securing our BT array
+
  for (int i = 0; i < lines; i++) {
         remainBurstTime[i] = BT[i];
     }
+// now for scheduling itself:
+// isarrayempty =  -1 means not empty
+// 0 means empty
+while(isarrayempty(remainBurstTime,lines) == -1){
 for (int i= 0; i < lines; i++){
-    if(BT[i] > time_quantum){
+    if(remainBurstTime[i] > 0){
+        if(remainBurstTime[i] > time_quantum){
         countertime = countertime + time_quantum;
-        remainBurstTime[i] = BT[i] - time_quantum;
-    }
-    else{
-        countertime + BT[i];
-        remainBurstTime[i] = 0;
-    }
-}
-cout<<"counter time after first run is: "<<countertime;
+        remainBurstTime[i] = remainBurstTime[i] - time_quantum;
 
-/*if(isarrayempty(remainBurstTime,lines) == -1){
-cout<<"\n empty ";
-}else{cout<<"\n not empty";}
-*/
+    }else{
+        countertime += remainBurstTime[i];
+        remainBurstTime[i] = 0;
+        }
+    }
+ }
+}
+
+for (int i = 0; i < lines; i++) {
+ cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
+cout<<endl;
 }
 
 //code for setting data into arrays
@@ -359,19 +374,14 @@ int countlines(const string& filename) {
 }
 
 int isarrayempty(int remainBurstTime[], int lines){
-int wecount = 0;
-int counter = 0;
-    while(counter != lines){
-        if( remainBurstTime[wecount] == 0 ){
-            counter++;
+    for (int i = 0; i < lines; i++) {
+        if (remainBurstTime[i] > 0) {
+            return -1; // Not empty
         }
-     wecount++;
     }
-
-    if(counter < lines){
-        return -1;
-    }else{ return 0;}
+    return 0; // Empty
 }
+
 
 void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[],int averagewait){
     ofstream outputtext("output.txt",ios::app);
