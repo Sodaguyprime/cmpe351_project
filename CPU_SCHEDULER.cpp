@@ -1,3 +1,4 @@
+//done by Ammar Mirghani (22109046)
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -11,6 +12,7 @@ void FCFS(int BT[], int At[], int Priority[], int lines,string myString, string 
 void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
 void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2);
+void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2);
 int isarrayempty(int remainBurstTime[], int lines);
 void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[], float averagewait);
 //main function:
@@ -84,14 +86,14 @@ int main() {
                 cout << "                   Show Result\n";
             if (myString ==  " First-come-first-served " ){
                 FCFS(BT, At, Priority, lines,myString, mystring2);
-            }else if(myString == " Shortest-Job-first "){
+            }else if(myString == " Shortest-Job-first " && mystring2 == " OFF "){
                 SJF(BT, At, Priority, lines,myString,mystring2);
-            }else if(myString == " Priority-Scheduling "){
+            }else if(myString == " Priority-Scheduling " && mystring2 == " OFF "){
             Priority_scheduling(BT, At, Priority,lines,myString,mystring2);}
             else if(myString == " Shortest-Job-first " && mystring2 ==" ON "){
-                cout<<"preemptive mode for SJF is not ready yet ";
+                PreemptiveSJFScheduling(BT,At,Priority,lines,myString,mystring2);
             }else if(myString == " Priority-Scheduling " && mystring2 ==" ON "){
-               // PreemptivePriorityScheduling(BT,At,Priority,lines,myString,mystring2);
+               //PreemptiveSJFScheduling(BT,At,Priority,lines,myString,mystring2);
             }else if(myString == " Round-Robin " && mystring2 ==" ON "){
                 cout<<"preemptive mode for Round-Robin does not exist ";
             }else if(myString == " Round-Robin " && mystring2 ==" OFF "){
@@ -334,8 +336,35 @@ int process_id[lines];
  for (int counting = 0; counting<lines; counting++){
     process_id[counting] = (counting + 1);
     }
-//getting our time Quantum
+//reordering our arrays
+int y = 1;
+if ( At[0] != 0 ){
+    while( At[y] != 0 ){
+    y++;
+    }
+    swap(At[y], At[0]);
+    swap(BT[y], BT[0]);
+    swap(Priority[y], Priority[0]);
+    swap(process_id[y], process_id[0]);
+}
 
+   for (int i = 1; i < lines ; i++) {
+        for (int j = 1; j < lines - i; j++) {
+            // Compare based on Burst Time (Bt)
+            if (BT[j] > BT[j +1]) 
+            {
+                swap(At[j], At[j + 1]);
+                swap(BT[j], BT[j + 1]);
+                swap(Priority[j], Priority[j + 1]);
+                swap(process_id[j], process_id[j + 1]);
+            }else if (BT[j] == BT[j + 1] && At[j] > At[j + 1]) {
+            swap(At[j], At[j + 1]);
+            swap(BT[j], BT[j + 1]);
+            swap(Priority[j], Priority[j + 1]);
+            swap(process_id[j], process_id[j + 1]);
+        }
+        }
+    }
 cout<<"please enter your time Quantum: ";
 cin>>time_quantum;
 cout<<endl;
@@ -375,6 +404,7 @@ writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 
 }
 
+
 //code for setting data into arrays
 
 void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
@@ -389,7 +419,7 @@ void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
 
      while (file.get(char1)) {
     if (char1 != ':' && char1 != '\n') {
-        file.putback(char1);  // Put back the character to read the entire integer
+        file.putback(char1);
         file >> intitself;
         temparray[i] = intitself;
         i++;
@@ -421,7 +451,7 @@ int countlines(const string& filename) {
 
     if (!file.is_open()) {
         cerr << "Error opening file.\n";
-        return -1; // Return an error code
+        return -1; 
     }
 
     do {
@@ -460,3 +490,102 @@ void writingtooutput(string myString, string mystring2, int lines, int process_i
     outputtext.close();
 }
 
+void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2){
+    //setting data into our array:
+setdata("text.txt",lines,BT,At,Priority);
+
+//initializing what we need
+int countertime = 0;
+int remainBurstTime[lines];
+int waiting_time[lines] = {0};
+int completion_time[lines] = {0};
+int TAT_time[lines];
+float averagewait = 0;
+int process_id[lines];
+
+ for (int counting = 0; counting<lines; counting++){
+    process_id[counting] = (counting + 1);
+    }
+//rearranging our array
+
+int y = 1;
+if ( At[0] != 0 ){
+    while( At[y] != 0 ){
+        y++;
+    }
+    swap(At[y], At[0]);
+    swap(BT[y], BT[0]);
+    swap(Priority[y], Priority[0]);
+    swap(process_id[y], process_id[0]);
+}
+
+   for (int i = 1; i < lines ; i++) {
+        for (int j = 1; j < lines - i; j++) {
+            // Compare based on Burst Time (Bt)
+            if (BT[j] > BT[j +1]) 
+            {
+                swap(At[j], At[j + 1]);
+                swap(BT[j], BT[j + 1]);
+                swap(Priority[j], Priority[j + 1]);
+                swap(process_id[j], process_id[j + 1]);
+            }else if (BT[j] == BT[j + 1] && At[j] > At[j + 1]) {
+            swap(At[j], At[j + 1]);
+            swap(BT[j], BT[j + 1]);
+            swap(Priority[j], Priority[j + 1]);
+            swap(process_id[j], process_id[j + 1]);
+        }
+        }
+    }
+//securing our BT array
+ for (int i = 0; i < lines; i++) {
+        remainBurstTime[i] = BT[i];
+    }
+
+
+    while(isarrayempty(remainBurstTime,lines) == -1){
+        int currentProcess = -1;
+        int shortestRemainingTime = __INT_MAX__;
+        for (int i = 0; i < lines; i++) {
+            if (At[i] <= countertime && remainBurstTime[i] > 0 && remainBurstTime[i] < shortestRemainingTime) {
+                currentProcess = i;
+                shortestRemainingTime = remainBurstTime[i];
+            }
+        }
+        if (currentProcess == -1) {
+            // No valid process found, break the loop
+            break;
+        }
+
+        countertime += remainBurstTime[currentProcess];
+        remainBurstTime[currentProcess] = 0;
+
+        completion_time[currentProcess] = countertime;
+        TAT_time[currentProcess] = completion_time[currentProcess] - At[currentProcess];
+        waiting_time[currentProcess] = TAT_time[currentProcess] - BT[currentProcess];
+        averagewait += waiting_time[currentProcess];
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// cout<<"\n totall counter time is: "<<countertime<<endl;
+for (int i = 0; i < lines; i++) 
+{cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
+cout<<endl<<"Average waiting Time is: "<<averagewait/lines<<endl;
+
+writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+}
