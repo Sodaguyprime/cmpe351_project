@@ -91,7 +91,7 @@ int main() {
             else if(myString == " Shortest-Job-first " && mystring2 ==" ON "){
                 cout<<"preemptive mode for SJF is not ready yet ";
             }else if(myString == " Priority-Scheduling " && mystring2 ==" ON "){
-                cout<<"preemptive mode for priority is not ready yet ";
+               // PreemptivePriorityScheduling(BT,At,Priority,lines,myString,mystring2);
             }else if(myString == " Round-Robin " && mystring2 ==" ON "){
                 cout<<"preemptive mode for Round-Robin does not exist ";
             }else if(myString == " Round-Robin " && mystring2 ==" OFF "){
@@ -239,7 +239,6 @@ for (int out= 0; out<lines;out++){cout<<" process p"<<process_id[out]<<" waiting
 writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 }
 //code for Priority scheduling
-
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
     //calling function to give us the array
 
@@ -379,23 +378,29 @@ writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 //code for setting data into arrays
 
 void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
+   //declaring data
     int dataArray[lines][3];
     int i = 0;
     int temparray[lines * 3];
     ifstream file(filename);
+    
     char char1;
     int intitself;
-    while (file.get(char1)) {
-        if (char1 != ':' && char1 != '\n') {
-            intitself = char1 - '0';
-            temparray[i] = intitself;
-            i++;
-            }
+
+     while (file.get(char1)) {
+    if (char1 != ':' && char1 != '\n') {
+        file.putback(char1);  // Put back the character to read the entire integer
+        file >> intitself;
+        temparray[i] = intitself;
+        i++;
     }
+}
+
     file.close();
+
     int index = 0;
-    for (int k=0;k<lines;k++){
-        for(int j=0; j<3;j++){
+    for (int k=0; k<lines; k++){
+        for(int j=0; j<3; j++){
             dataArray[k][j] = temparray[index];
             index++;
         }
@@ -454,3 +459,4 @@ void writingtooutput(string myString, string mystring2, int lines, int process_i
     }        
     outputtext.close();
 }
+
