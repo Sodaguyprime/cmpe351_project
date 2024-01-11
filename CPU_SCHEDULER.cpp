@@ -6,27 +6,25 @@
 using namespace std;
 
 //declaring functions
-
-int countlines(const string& filename);
-void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]);
-void FCFS(int BT[], int At[], int Priority[], int lines,string myString, string mystring2);
-void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
-void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2);
-void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2);
-void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2);
+int countlines(const char * filename);
+void setdata(const char * filename,int lines,int BT[],int At[],int Priority[]);
+void FCFS(int BT[], int At[], int Priority[], int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE);
+void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE);
+void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE);
+void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE);
+void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE);
 int isarrayempty(int remainBurstTime[], int lines);
-void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[], float averagewait);
+void writingtooutput(const char *OUTPUTFILE, string myString, string mystring2, int lines, int process_id[], int waiting_time[], float averagewait);
 //main function:
 int main(int argc, char *argv[]) {
     char *INPUTFILE = argv[2];
-    char * OUTPUTFILE = argv[4];
-    
+    char *OUTPUTFILE = argv[4];
     //declaring variables
     int choice;
     int schedule;
     int schedule2;
     int lines;
-    lines = countlines("text.txt");
+    lines = countlines(INPUTFILE);
     int BT[lines],At[lines],Priority[lines];
     string myString;
     string mystring2;
@@ -89,19 +87,19 @@ int main(int argc, char *argv[]) {
             case 3:
                 cout << "                   Show Result\n";
             if (myString ==  " First-come-first-served " ){
-                FCFS(BT, At, Priority, lines,myString, mystring2);
+                FCFS(BT, At, Priority, lines,myString, mystring2,INPUTFILE,OUTPUTFILE);
             }else if(myString == " Shortest-Job-first " && mystring2 == " OFF "){
-                SJF(BT, At, Priority, lines,myString,mystring2);
+                SJF(BT, At, Priority, lines,myString,mystring2,INPUTFILE,OUTPUTFILE);
             }else if(myString == " Priority-Scheduling " && mystring2 == " OFF "){
-            Priority_scheduling(BT, At, Priority,lines,myString,mystring2);}
+            Priority_scheduling(BT, At, Priority,lines,myString,mystring2,INPUTFILE,OUTPUTFILE);}
             else if(myString == " Shortest-Job-first " && mystring2 ==" ON "){
-                PreemptiveSJFScheduling(BT,At,Priority,lines,myString,mystring2);
+                PreemptiveSJFScheduling(BT,At,Priority,lines,myString,mystring2,INPUTFILE,OUTPUTFILE);
             }else if(myString == " Priority-Scheduling " && mystring2 ==" ON "){
                //PreemptiveSJFScheduling(BT,At,Priority,lines,myString,mystring2);
             }else if(myString == " Round-Robin " && mystring2 ==" ON "){
                 cout<<"preemptive mode for Round-Robin does not exist ";
             }else if(myString == " Round-Robin " && mystring2 ==" OFF "){
-                Round_Robin_scheduling(BT,At,Priority,lines,myString,mystring2);
+                Round_Robin_scheduling(BT,At,Priority,lines,myString,mystring2,INPUTFILE,OUTPUTFILE);
             }
             else{cout<<"not ready or incorrect output";}
                 cout<<"\n";
@@ -117,10 +115,10 @@ int main(int argc, char *argv[]) {
 }
 //code for FCFS scheduling
 
-void FCFS(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
+void FCFS(int BT[], int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE) {
 
     //calling function to give us the array
-    setdata("text.txt",lines,BT,At,Priority);
+    setdata(INPUTFILE,lines,BT,At,Priority);
     //declaring varibales needed
     int process_id[lines];
     float averagewait = 0;
@@ -165,16 +163,16 @@ for (int i = 0; i < lines - 1; i++) {
     }
 
     cout<<"                         Scheduling method: First come First served"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
-writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+writingtooutput(OUTPUTFILE,myString,mystring2,lines,process_id,waiting_time,averagewait);
 
 }
 
 //code for SJF scheduling
 
-void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
+void SJF(int BT[], int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE) {
     //calling function to give us the array
 
-    setdata("text.txt",lines,BT,At,Priority);
+    setdata(INPUTFILE,lines,BT,At,Priority);
 
     //declaring variables needed
 
@@ -243,13 +241,13 @@ for (int out= 0; out<lines;out++){cout<<" process p"<<process_id[out]<<" waiting
 
 
     cout<<"                         Scheduling method: SHORTEST JOB FIRST"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
-writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+writingtooutput(OUTPUTFILE,myString,mystring2,lines,process_id,waiting_time,averagewait);
 }
 //code for Priority scheduling
-void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
+void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE) {
     //calling function to give us the array
 
-    setdata("text.txt",lines,BT,At,Priority);
+    setdata(INPUTFILE,lines,BT,At,Priority);
 
     //declaring variables needed
 
@@ -318,14 +316,14 @@ for (int out= 0; out<lines;out++){cout<<" process p"<<process_id[out]<<" waiting
 
 
     cout<<"                         Scheduling method: SHORTEST JOB FIRST"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
-writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+writingtooutput(OUTPUTFILE,myString,mystring2,lines,process_id,waiting_time,averagewait);
 }
 //code for Round-Robin scheduling
 
-void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2){
+void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE){
 
 //setting data into our array:
-setdata("Text.txt",lines,BT,At,Priority);
+setdata(INPUTFILE,lines,BT,At,Priority);
 
 //initializing what we need
 
@@ -405,14 +403,14 @@ for (int i = 0; i < lines; i++)
 {cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
 cout<<endl<<"Average waiting Time is: "<<averagewait/lines<<endl;
 
-writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+writingtooutput(OUTPUTFILE,myString,mystring2,lines,process_id,waiting_time,averagewait);
 
 }
 
 
 //code for setting data into arrays
 
-void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
+void setdata(const char * filename,int lines,int BT[],int At[],int Priority[]){
    //declaring data
     int dataArray[lines][3];
     int i = 0;
@@ -449,7 +447,7 @@ void setdata(const string& filename,int lines,int BT[],int At[],int Priority[]){
     
 }
 //code for counting how many processes we have in the file
-int countlines(const string& filename) {
+int countlines(const char * filename) {
     int count = 0;
     char D;
     ifstream file(filename);
@@ -479,8 +477,8 @@ int isarrayempty(int remainBurstTime[], int lines){
     return 0; // Empty
 }
 
-void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[],float averagewait){
-    ofstream outputtext("output.txt",ios::app);
+void writingtooutput(const char *OUTPUTFILE,string myString, string mystring2, int lines, int process_id[], int waiting_time[],float averagewait){
+    ofstream outputtext(OUTPUTFILE,ios::app);
     if(!outputtext.is_open()){
         cout<<"unable to save to output file"<<endl;
     }else{
@@ -495,9 +493,9 @@ void writingtooutput(string myString, string mystring2, int lines, int process_i
     outputtext.close();
 }
 
-void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2){
+void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2,const char *INPUTFILE,const char *OUTPUTFILE){
 //setting data into our array:
-setdata("text.txt",lines,BT,At,Priority);
+setdata(INPUTFILE,lines,BT,At,Priority);
 //initializing what we need
 int countertime = 0;
 int remainBurstTime[lines];
@@ -524,7 +522,7 @@ int process_id[lines];
         int min_value = INT_MAX;
 
     for (int i = 0; i < lines; i++) {
-    if (remainBurstTime[i] > 0 && remainBurstTime[i] < min_value) {
+    if (At[i] <= Current_time && remainBurstTime[i] > 0 && remainBurstTime[i] < min_value) {
         min_value = remainBurstTime[i];
         min_index = i;
     }
@@ -549,6 +547,6 @@ for (int i = 0; i < lines; i++)
 {cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
 
 cout<<endl<<"Average waiting Time is: "<<averagewait/lines<<endl;
-writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait); 
+writingtooutput(OUTPUTFILE,myString,mystring2,lines,process_id,waiting_time,averagewait); 
 
 }
