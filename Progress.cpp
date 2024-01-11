@@ -242,36 +242,60 @@ writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 
 void Priority_scheduling(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
     //calling function to give us the array
+
     setdata("text.txt",lines,BT,At,Priority);
+
     //declaring variables needed
 
     int process_id[lines];
     float averagewait = 0;
-    int waiting_time[lines];
-    int waitingint = 0;
+    int waiting_time[lines] = {0};
+    int waitingint = 0; 
+    int TAT[lines] = {0};
+    int CAT[lines] = {0};
 
     for (int counting = 0; counting<lines; counting++){
         process_id[counting] = (counting + 1);
     }
-   for (int i = 0; i < lines - 1; i++) {
-        for (int j = 0; j < lines - i - 1; j++) {
-            // Compare based on priority (priority)
-            if (Priority[j] > Priority[j + 1]) 
+int y = 1;
+if ( At[0] != 0 ){
+    while( At[y] != 0 ){
+    
+    }y++;
+    swap(At[y], At[0]);
+    swap(BT[y], BT[0]);
+    swap(Priority[y], Priority[0]);
+    swap(process_id[y], process_id[0]);
+}
+
+   for (int i = 1; i < lines ; i++) {
+        for (int j = 1; j < lines - i; j++) {
+            // Compare based on Burst Time (Bt)
+            if (Priority[j] > Priority[j +1]) 
             {
                 swap(At[j], At[j + 1]);
                 swap(BT[j], BT[j + 1]);
                 swap(Priority[j], Priority[j + 1]);
                 swap(process_id[j], process_id[j + 1]);
-            }
+            }else if (Priority[j] == Priority[j + 1] && At[j] > At[j + 1]) {
+            swap(At[j], At[j + 1]);
+            swap(BT[j], BT[j + 1]);
+            swap(Priority[j], Priority[j + 1]);
+            swap(process_id[j], process_id[j + 1]);
+        }
         }
     }
+waitingint = At[0];
     cout<<" the amount of Proccess we have are: "<<lines<<endl;
        for (int t=0; t<lines; t++){
-        waiting_time[t] = waitingint;
+        CAT[t] = waitingint;
         waitingint = waitingint + BT[t];
+        TAT[t] = waitingint - At[t];
+        waiting_time[t] = TAT[t] - BT[t];
         averagewait = averagewait + waiting_time[t];
     }
-for (int i = 0; i < lines - 1; i++) {
+
+    for (int i = 0; i < lines - 1; i++) {
         for (int j = 0; j < lines - i - 1; j++) {
             // Compare based on Burst Time (Bt)
             if (process_id[j] > process_id[j + 1]) 
@@ -281,12 +305,13 @@ for (int i = 0; i < lines - 1; i++) {
             }
         }
     }
-    for (int out= 0; out<lines;out++){
-        cout<<" process p"<<process_id[out]<<" waiting time is:"<<waiting_time[out]<<endl;
-    }
+//for (int u = 0; u<lines;u++){cout<<endl<<"arrival time with burst time: "<<At[u]<<" "<<BT[u];}
+for (int out= 0; out<lines;out++){cout<<" process p"<<process_id[out]<<" waiting time is:"<<waiting_time[out]<<endl;}
+
+    
 
 
-    cout<<"                         Scheduling method: Priority Scheduling"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
+    cout<<"                         Scheduling method: SHORTEST JOB FIRST"<<endl<<"                         Average process waiting times are: "<< averagewait/lines <<endl;
 writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 }
 //code for Round-Robin scheduling
