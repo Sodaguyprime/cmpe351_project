@@ -1,82 +1,82 @@
-Scheduling method:  Priority-Scheduling 
+Scheduling method:  First-come-first-served 
 Preemptive mode:  OFF 
 process waiting times: 
 Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
+Process P2 waiting time is:  4
+Process P3 waiting time is:  8
+Process P4 waiting time is:  10
+Process P5 waiting time is:  13
 
- Average waiting time is: 6.4
+ Average waiting time is: 7
 ----------------------------------------------------------------------------
-Scheduling method:  Priority-Scheduling 
+Scheduling method:  Shortest-Job-first 
 Preemptive mode:  ON 
 process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
+Process P1 waiting time is:  14
+Process P3 waiting time is:  -1
+Process P5 waiting time is:  0
+Process P2 waiting time is:  5
+Process P4 waiting time is:  8
 
- Average waiting time is: 6.4
+ Average waiting time is: 5.2
 ----------------------------------------------------------------------------
 Scheduling method:  First-come-first-served 
 Preemptive mode:  OFF 
 process waiting times: 
 Process P1 waiting time is:  0
-Process P2 waiting time is:  1071499216
-Process P3 waiting time is:  0
+Process P2 waiting time is:  4
+Process P3 waiting time is:  8
+Process P4 waiting time is:  10
+Process P5 waiting time is:  13
+
+ Average waiting time is: 7
+----------------------------------------------------------------------------
+Scheduling method:  First-come-first-served 
+Preemptive mode:  OFF 
+process waiting times: 
+Process P1 waiting time is:  0
+Process P2 waiting time is:  4
+Process P3 waiting time is:  8
+Process P4 waiting time is:  10
+Process P5 waiting time is:  13
+
+ Average waiting time is: 7
+----------------------------------------------------------------------------
+Scheduling method:  First-come-first-served 
+Preemptive mode:  OFF 
+process waiting times: 
+Process P1 waiting time is:  0
+Process P2 waiting time is:  14
+Process P3 waiting time is:  18
+Process P4 waiting time is:  49
+Process P5 waiting time is:  52
+
+ Average waiting time is: 26.6
+----------------------------------------------------------------------------
+Scheduling method:  First-come-first-served 
+Preemptive mode:  OFF 
+process waiting times: 
+Process P1 waiting time is:  0
+Process P2 waiting time is:  14
+Process P3 waiting time is:  18
+Process P4 waiting time is:  49
+Process P5 waiting time is:  52
+
+ Average waiting time is: 26.6
+----------------------------------------------------------------------------
+Scheduling method:  Shortest-Job-first 
+Preemptive mode:  ON 
+process waiting times: 
+Process P1 waiting time is:  11
+Process P5 waiting time is:  -3
+Process P2 waiting time is:  2
 Process P4 waiting time is:  5
-Process P5 waiting time is:  5
+Process P3 waiting time is:  25
 
- Average waiting time is: 2.143e+08
-----------------------------------------------------------------------------
-Scheduling method:  First-come-first-served 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  4
-Process P3 waiting time is:  8
-Process P4 waiting time is:  10
-Process P5 waiting time is:  13
-
- Average waiting time is: 7
-----------------------------------------------------------------------------
-Scheduling method:  First-come-first-served 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  9
-Process P3 waiting time is:  13
-Process P4 waiting time is:  15
-Process P5 waiting time is:  18
-
- Average waiting time is: 11
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  ON 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
+ Average waiting time is: 8
 ----------------------------------------------------------------------------
 Scheduling method:  Shortest-Job-first 
 Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  ON 
 process waiting times: 
 Process P1 waiting time is:  0
 Process P2 waiting time is:  10
@@ -101,142 +101,10 @@ Scheduling method:  Shortest-Job-first
 Preemptive mode:  ON 
 process waiting times: 
 Process P1 waiting time is:  14
-Process P3 waiting time is:  -1
-Process P5 waiting time is:  0
 Process P2 waiting time is:  5
+Process P3 waiting time is:  -1
 Process P4 waiting time is:  8
+Process P5 waiting time is:  0
 
  Average waiting time is: 5.2
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  ON 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P3 waiting time is:  4
-Process P5 waiting time is:  5
-Process P2 waiting time is:  10
-Process P4 waiting time is:  13
-
- Average waiting time is: 0
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  ON 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P3 waiting time is:  4
-Process P5 waiting time is:  5
-Process P2 waiting time is:  10
-Process P4 waiting time is:  13
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  First-come-first-served 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  4
-Process P3 waiting time is:  8
-Process P4 waiting time is:  10
-Process P5 waiting time is:  13
-
- Average waiting time is: 7
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Priority-Scheduling 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Priority-Scheduling 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Priority-Scheduling 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Round-Robin 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  14
-Process P3 waiting time is:  9
-Process P5 waiting time is:  8
-Process P2 waiting time is:  11
-Process P4 waiting time is:  12
-
- Average waiting time is: 13
-----------------------------------------------------------------------------
-Scheduling method:  Round-Robin 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  14
-Process P3 waiting time is:  9
-Process P5 waiting time is:  8
-Process P2 waiting time is:  11
-Process P4 waiting time is:  12
-
- Average waiting time is: 13
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  OFF 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P2 waiting time is:  10
-Process P3 waiting time is:  4
-Process P4 waiting time is:  13
-Process P5 waiting time is:  5
-
- Average waiting time is: 6.4
-----------------------------------------------------------------------------
-Scheduling method:  Shortest-Job-first 
-Preemptive mode:  ON 
-process waiting times: 
-Process P1 waiting time is:  0
-Process P3 waiting time is:  4
-Process P5 waiting time is:  5
-Process P2 waiting time is:  10
-Process P4 waiting time is:  13
-
- Average waiting time is: 6.4
 ----------------------------------------------------------------------------

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <climits>
 using namespace std;
 
 //declaring functions
@@ -16,7 +17,10 @@ void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string
 int isarrayempty(int remainBurstTime[], int lines);
 void writingtooutput(string myString, string mystring2, int lines, int process_id[], int waiting_time[], float averagewait);
 //main function:
-int main() {
+int main(int argc, char *argv[]) {
+    char *INPUTFILE = argv[2];
+    char * OUTPUTFILE = argv[4];
+    
     //declaring variables
     int choice;
     int schedule;
@@ -28,7 +32,7 @@ int main() {
     string mystring2;
     myString = "NONE";
     mystring2 = " OFF ";
-    //main menu function
+   //main menu function
     while (true) {
         cout << "                     CPU SCHEDULER SIMULAtOR\n";
         cout << "  1) Scheduling Method("<<myString<<")\n";
@@ -114,6 +118,7 @@ int main() {
 //code for FCFS scheduling
 
 void FCFS(int BT[], int At[], int Priority[],int lines,string myString, string mystring2) {
+
     //calling function to give us the array
     setdata("text.txt",lines,BT,At,Priority);
     //declaring varibales needed
@@ -320,7 +325,7 @@ writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
 void Round_Robin_scheduling(int BT[],int At[], int Priority[],int lines,string myString, string mystring2){
 
 //setting data into our array:
-setdata("text.txt",lines,BT,At,Priority);
+setdata("Text.txt",lines,BT,At,Priority);
 
 //initializing what we need
 
@@ -491,9 +496,8 @@ void writingtooutput(string myString, string mystring2, int lines, int process_i
 }
 
 void PreemptiveSJFScheduling(int BT[],int At[],int Priority[], int lines, string myString, string mystring2){
-    //setting data into our array:
+//setting data into our array:
 setdata("text.txt",lines,BT,At,Priority);
-
 //initializing what we need
 int countertime = 0;
 int remainBurstTime[lines];
@@ -506,86 +510,45 @@ int process_id[lines];
  for (int counting = 0; counting<lines; counting++){
     process_id[counting] = (counting + 1);
     }
-//rearranging our array
-
-int y = 1;
-if ( At[0] != 0 ){
-    while( At[y] != 0 ){
-        y++;
-    }
-    swap(At[y], At[0]);
-    swap(BT[y], BT[0]);
-    swap(Priority[y], Priority[0]);
-    swap(process_id[y], process_id[0]);
-}
-
-   for (int i = 1; i < lines ; i++) {
-        for (int j = 1; j < lines - i; j++) {
-            // Compare based on Burst Time (Bt)
-            if (BT[j] > BT[j +1]) 
-            {
-                swap(At[j], At[j + 1]);
-                swap(BT[j], BT[j + 1]);
-                swap(Priority[j], Priority[j + 1]);
-                swap(process_id[j], process_id[j + 1]);
-            }else if (BT[j] == BT[j + 1] && At[j] > At[j + 1]) {
-            swap(At[j], At[j + 1]);
-            swap(BT[j], BT[j + 1]);
-            swap(Priority[j], Priority[j + 1]);
-            swap(process_id[j], process_id[j + 1]);
-        }
-        }
-    }
 //securing our BT array
  for (int i = 0; i < lines; i++) {
         remainBurstTime[i] = BT[i];
     }
 
 
-    while(isarrayempty(remainBurstTime,lines) == -1){
-        int currentProcess = -1;
-        int shortestRemainingTime = __INT_MAX__;
-        for (int i = 0; i < lines; i++) {
-            if (At[i] <= countertime && remainBurstTime[i] > 0 && remainBurstTime[i] < shortestRemainingTime) {
-                currentProcess = i;
-                shortestRemainingTime = remainBurstTime[i];
-            }
-        }
-        if (currentProcess == -1) {
-            // No valid process found, break the loop
-            break;
-        }
+    int completed = 0;
+    int Current_time = 0;   
 
-        countertime += remainBurstTime[currentProcess];
-        remainBurstTime[currentProcess] = 0;
+    while(completed != lines){
+        int min_index = -1;
+        int min_value = INT_MAX;
 
-        completion_time[currentProcess] = countertime;
-        TAT_time[currentProcess] = completion_time[currentProcess] - At[currentProcess];
-        waiting_time[currentProcess] = TAT_time[currentProcess] - BT[currentProcess];
-        averagewait += waiting_time[currentProcess];
+    for (int i = 0; i < lines; i++) {
+    if (remainBurstTime[i] > 0 && remainBurstTime[i] < min_value) {
+        min_value = remainBurstTime[i];
+        min_index = i;
     }
+}
+//actual scheduling
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            if( min_index != -1 ){
+            remainBurstTime[min_index] -= 1;
+            Current_time++;
+            if(remainBurstTime[min_index]==0){
+                completion_time[min_index] = Current_time;
+                TAT_time[min_index] = completion_time[min_index] - At[min_index];
+                waiting_time[min_index] = TAT_time[min_index]-BT[min_index];
+                averagewait += waiting_time[min_index];
+                completed++;
+                }
+        }
+        else{Current_time++;}
+    }
 // cout<<"\n totall counter time is: "<<countertime<<endl;
 for (int i = 0; i < lines; i++) 
 {cout << "Process P" << i + 1 << " waiting time is: " << waiting_time[i] << endl;}
-cout<<endl<<"Average waiting Time is: "<<averagewait/lines<<endl;
 
-writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait);
+cout<<endl<<"Average waiting Time is: "<<averagewait/lines<<endl;
+writingtooutput(myString,mystring2,lines,process_id,waiting_time,averagewait); 
+
 }
